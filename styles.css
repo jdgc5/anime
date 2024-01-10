@@ -1,0 +1,49 @@
+.container {
+    position: relative;
+    width: 80%; 
+    margin: 0 auto; 
+}
+
+.slider {
+    display: flex;
+    overflow-x: hidden;
+}
+
+.id {
+    flex: 0 0 100%;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    flex-direction: column;
+    text-align: center;
+}
+
+
+.btn-prev,
+.btn-next,
+.btn-rewind {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: #333;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 100%;
+    font-size: 2rem;
+}
+
+.btn-prev {
+    left: 10px;
+}
+
+.btn-next {
+    right: 10px;
+}
+.btn-rewind{
+    left:45%;
+    top:125%;
+}
