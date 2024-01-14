@@ -1,9 +1,14 @@
 class Draw {
     constructor(data, slider) {
         this.index = 0;
-        this.data = data.diapositiva;
+        this.data = [];
         this.container = document.getElementById(slider);
         let template = this.container.children[0];
+        if (!this.validateData(data)) {
+            
+            console.error('Datos iniciales no válidos.');
+            return;
+        }
         this.buildSlides(template);
         this.buildNavButtons();
         this.container.removeChild(template);
@@ -61,17 +66,48 @@ class Draw {
         this.updateSlide();
     }
 
+    validateData(data) {
+        if (
+            data &&
+            Array.isArray(data.diapositiva) &&
+            data.diapositiva.every(item =>
+                item &&
+                typeof item === 'object' &&
+                'titulo' in item && typeof item.titulo === 'string' &&
+                'subtitulo' in item && typeof item.subtitulo === 'string' &&
+                'contenido' in item && typeof item.contenido === 'string'
+            )
+        ) {
+            this.data = data.diapositiva;
+            return true;
+        } else {
+            console.error('Datos no válidos');
+            return false;
+        }
+    }
+    
+
     updateSlide() {
         let diapositivas = this.container.getElementsByClassName('id');
-        console.log(diapositivas);  
-    
-        for (let i = 0; i < diapositivas.length; i++) {
-            if (i === this.index) {
-                diapositivas[i].style.display = 'block';
-            } else {
-                diapositivas[i].style.display = 'none';
+        let selectedDiapositivas = Array.from(diapositivas);
+
+        anime({
+            targets: diapositivas,
+            opacity: 0,
+            duration: 1000,
+            translateX : 450,
+            delay: 100,
+            direction: 'alternate',
+            easing: 'easeInOutQuad',
+            complete: () => {
+                for (let i = 0; i < selectedDiapositivas.length; i++) {
+                    selectedDiapositivas[i].style.opacity = 1;
+                    selectedDiapositivas[i].children[0].innerHTML = this.data[this.index].titulo;
+                    selectedDiapositivas[i].children[1].innerHTML = this.data[this.index].subtitulo;
+                    selectedDiapositivas[i].children[2].innerHTML = this.data[this.index].contenido;
+                }
             }
-        }
+        });
     }
 }
 export { Draw }

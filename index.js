@@ -12,7 +12,8 @@ let datos ={
             "titulo":"hola2",
             "subtitulo":"buenos dias2",
             "contenido":"adios2"
-        }
+        },
+
     ]
 }
 
